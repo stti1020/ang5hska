@@ -1,0 +1,66 @@
+# Organisation 2
+version: '2'
+
+services:
+
+  # CA
+  ca.orggermany.dltrouting.com:
+    container_name: ca.orggermany.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: ca-base
+    environment:
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.orggermany.dltrouting.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c2615557ec890195d4affb476040fd65dac1042ddd0f8f8f100271fae76e11e4_sk
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.orggermany.dltrouting.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c2615557ec890195d4affb476040fd65dac1042ddd0f8f8f100271fae76e11e4_sk
+    ports:
+      - 8054:7054
+    volumes:
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orggermany.dltrouting.com/ca/:/etc/hyperledger/fabric-ca-server-config
+
+  # Peer 0
+  peer0.orggermany.dltrouting.com:
+    container_name: peer0.orggermany.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.orggermany.dltrouting.com
+      - CORE_PEER_LOCALMSPID=OrgGermanyMSP
+      - CORE_PEER_ADDRESS=peer0.orggermany.dltrouting.com:7051
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.orggermany.dltrouting.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    ports:
+      - 8051:7051
+      - 8053:7053
+    volumes:
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orggermany.dltrouting.com/peers/peer0.orggermany.dltrouting.com/:/etc/hyperledger/crypto/peer
+
+  couchdb.peer0.orggermany.dltrouting.com:
+    image: hyperledger/fabric-couchdb
+    container_name: couchdb.peer0.orggermany.dltrouting.com
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 8984:5984
+
+  cli.peer0.orggermany.dltrouting.com:
+    container_name: cli.peer0.orggermany.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: cli-base
+    environment:
+      - CORE_PEER_ID=cli.peer0.orggermany.dltrouting.com
+      - CORE_PEER_ADDRESS=peer0.orggermany.dltrouting.com:7051
+      - CORE_PEER_LOCALMSPID=OrgGermanyMSP
+      - ORDERER_ADDRESS=host.orggermany.dltrouting.com:8050
+    volumes:
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orggermany.dltrouting.com/peers/peer0.orggermany.dltrouting.com/:/etc/hyperledger/crypto/peer
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orggermany.dltrouting.com/users/Admin@orggermany.dltrouting.com/msp/:/etc/hyperledger/crypto/admin/msp
+      - ./../../artifactsKafka/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orggermany.dltrouting.com/msp/tlscacerts:/etc/hyperledger/crypto/orderer/msp/tlscacerts
+
+  

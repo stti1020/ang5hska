@@ -1,0 +1,64 @@
+# Organisation 1
+version: '2'
+
+services:
+
+  # CA
+  ca.orgitaly.dltrouting.com:
+    container_name: ca.orgitaly.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: ca-base
+    environment:
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.orgitaly.dltrouting.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d2c2c6bc2edbb7f01ae5a2148fa573437a234dc87249ea7761e7575b69e7c414_sk
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.orgitaly.dltrouting.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d2c2c6bc2edbb7f01ae5a2148fa573437a234dc87249ea7761e7575b69e7c414_sk
+    ports:
+      - 9054:7054
+    volumes:
+      - ./../../artifactsSolo/crypto-config/peerOrganizations/orgitaly.dltrouting.com/ca/:/etc/hyperledger/fabric-ca-server-config
+  
+  # Peer 0
+  peer0.orgitaly.dltrouting.com:
+    container_name: peer0.orgitaly.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.orgitaly.dltrouting.com
+      - CORE_PEER_LOCALMSPID=OrgItalyMSP
+      - CORE_PEER_ADDRESS=peer0.orgitaly.dltrouting.com:7051
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.orgitaly.dltrouting.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    ports:
+      - 9051:7051
+      - 9053:7053
+    volumes:
+      - ./../../artifactsSolo/crypto-config/peerOrganizations/orgitaly.dltrouting.com/peers/peer0.orgitaly.dltrouting.com/:/etc/hyperledger/crypto/peer
+
+  couchdb.peer0.orgitaly.dltrouting.com:
+    image: hyperledger/fabric-couchdb
+    container_name: couchdb.peer0.orgitaly.dltrouting.com
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 9984:5984
+
+  cli.peer0.orgitaly.dltrouting.com:
+    container_name: cli.peer0.orgitaly.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: cli-base
+    environment:
+      - CORE_PEER_ID=cli.peer0.orgitaly.dltrouting.com
+      - CORE_PEER_ADDRESS=peer0.orgitaly.dltrouting.com:7051
+      - CORE_PEER_LOCALMSPID=OrgItalyMSP
+      - ORDERER_ADDRESS=host.orgaustria.dltrouting.com:7050
+    volumes:
+      - ./../../artifactsSolo/crypto-config/peerOrganizations/orgitaly.dltrouting.com/peers/peer0.orgitaly.dltrouting.com/:/etc/hyperledger/crypto/peer
+      - ./../../artifactsSolo/crypto-config/peerOrganizations/orgitaly.dltrouting.com/users/Admin@orgitaly.dltrouting.com/msp/:/etc/hyperledger/crypto/admin/msp
+      - ./../../artifactsSolo/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orgitaly.dltrouting.com/msp/tlscacerts:/etc/hyperledger/crypto/orderer/msp/tlscacerts

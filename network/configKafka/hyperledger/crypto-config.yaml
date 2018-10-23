@@ -1,0 +1,115 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# ---------------------------------------------------------------------------
+# "OrdererOrgs" - Definition of organizations managing orderer nodes
+# ---------------------------------------------------------------------------
+OrdererOrgs:
+  # ---------------------------------------------------------------------------
+  # Orderer
+  # ---------------------------------------------------------------------------
+  
+  - Name: OrdererGermany
+    Domain: dltrouting.com
+    # ---------------------------------------------------------------------------
+    # "Specs" - See PeerOrgs below for complete description
+    # ---------------------------------------------------------------------------
+    Specs:
+      #- Hostname: orderer
+      - Hostname: host.orggermany
+      - Hostname: host.orgaustria
+      - Hostname: host.orgitaly
+      - Hostname: host.orgnetherlands
+
+
+  - Name: OrdererAustria
+    Domain: dltrouting.com
+    # ---------------------------------------------------------------------------
+    # "Specs" - See PeerOrgs below for complete description
+    # ---------------------------------------------------------------------------
+    Specs:
+      #- Hostname: orderer
+      - Hostname: host.orggermany
+      - Hostname: host.orgaustria
+      - Hostname: host.orgitaly
+      - Hostname: host.orgnetherlands
+  
+
+  - Name: OrdererItaly
+    Domain: dltrouting.com
+    # ---------------------------------------------------------------------------
+    # "Specs" - See PeerOrgs below for complete description
+    # ---------------------------------------------------------------------------
+    Specs:
+      #- Hostname: orderer
+      - Hostname: host.orggermany
+      - Hostname: host.orgaustria
+      - Hostname: host.orgitaly
+      - Hostname: host.orgnetherlands
+
+  - Name: OrdererNetherlands
+    Domain: dltrouting.com
+    # ---------------------------------------------------------------------------
+    # "Specs" - See PeerOrgs below for complete description
+    # ---------------------------------------------------------------------------
+    Specs:
+      #- Hostname: orderer
+      - Hostname: host.orggermany
+      - Hostname: host.orgaustria
+      - Hostname: host.orgitaly
+      - Hostname: host.orgnetherlands
+
+# ---------------------------------------------------------------------------
+# "PeerOrgs" - Definition of organizations managing peer nodes
+# ---------------------------------------------------------------------------
+PeerOrgs:
+  # ---------------------------------------------------------------------------
+  # OrgGermany
+  # ---------------------------------------------------------------------------
+  - Name: OrgGermany
+    Domain: orggermany.dltrouting.com
+    CA:
+       Hostname: ca
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  # ---------------------------------------------------------------------------
+  # OrgAustria: See "Org1" for full specification
+  # ---------------------------------------------------------------------------
+  - Name: OrgAustria
+    Domain: orgaustria.dltrouting.com
+    CA:
+       Hostname: ca
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  # ---------------------------------------------------------------------------
+  # OrgItaly: See "Org1" for full specification
+  # ---------------------------------------------------------------------------
+  - Name: OrgItaly
+    Domain: orgitaly.dltrouting.com
+    CA:
+       Hostname: ca
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+  # ---------------------------------------------------------------------------
+  # OrgNetherlands: See "Org1" for full specification
+  # ---------------------------------------------------------------------------
+  - Name: OrgNetherlands
+    Domain: orgnetherlands.dltrouting.com
+    CA:
+       Hostname: ca
+    Template:
+      Count: 1
+    Users:
+      Count: 1
+
+
+
+

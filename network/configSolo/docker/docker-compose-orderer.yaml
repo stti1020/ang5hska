@@ -1,0 +1,15 @@
+# Orderer
+version: '2'
+
+services:
+
+  ordereraustria.dltrouting.com:
+    container_name: ordereraustria.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    image: hyperledger/fabric-orderer
+    ports:
+      - 7050:7050
+    volumes:
+        - ./../../artifactsSolo/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orgaustria.dltrouting.com/:/etc/hyperledger/crypto/orderer

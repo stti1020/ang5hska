@@ -1,0 +1,14 @@
+img {
+	margin-top: 5px;
+	max-height: 40px;
+	padding: 0 10px 0 10px;
+	cursor: pointer;
+}
+
+nav {
+	background-color: #3c8cbd !important;
+}
+
+.logo {
+	background-color: #317298!important;
+}

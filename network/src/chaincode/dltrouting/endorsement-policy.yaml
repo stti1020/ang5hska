@@ -1,0 +1,27 @@
+---
+# Policy zum Austesten
+
+identities:  # list roles to be used in the policy
+    userAustria: {"role": {"name": "member", "mspId": "OrgAustriaMSP"}} # role member in org with mspid Org1MSP
+    userGermany: {"role": {"name": "member", "mspId": "OrgGermanyMSP"}}
+    userItaly: {"role": {"name": "member", "mspId": "OrgItalyMSP"}}
+    userNetherlands: {"role": {"name": "member", "mspId": "OrgNetherlandsMSP"}}
+    adminAustria: {"role": {"name": "admin", "mspId": "OrgAustriaMSP"}} # admin role.
+    adminGermany: {"role": {"name": "admin", "mspId": "OrgGermanyMSP"}}
+    adminItaly: {"role": {"name": "admin", "mspId": "OrgItalyMSP"}}
+    adminNetherlands: {"role": {"name": "admin", "mspId": "OrgNetherlandsMSP"}}
+
+policy: # the policy  .. could have been flat but show grouping.
+    1-of: # signed by one of these groups  can be <n>-of  where <n> is any digit 2-of, 3-of etc..
+      - 1-of:
+        - signed-by: "userAustria" # a reference to one of the identities defined above.
+        - signed-by: "adminAustria"
+      - 1-of:
+        - signed-by: "userGermany"
+        - signed-by: "adminGermany"
+      - 1-of:
+        - signed-by: "userItaly"
+        - signed-by: "adminItaly"
+      - 1-of:
+        - signed-by: "userNetherlands"
+        - signed-by: "adminNetherlands"

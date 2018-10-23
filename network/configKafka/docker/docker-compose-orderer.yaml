@@ -1,0 +1,48 @@
+# Orderer
+version: '2'
+
+services:
+
+  ordereraustria.dltrouting.com:
+    container_name: ordereraustria.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    image: hyperledger/fabric-orderer
+    ports:
+      - 7050:7050
+    volumes:
+        - ./../../artifactsKafka/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orgaustria.dltrouting.com/:/etc/hyperledger/crypto/orderer
+
+  orderergermany.dltrouting.com:
+    container_name: orderergermany.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    image: hyperledger/fabric-orderer
+    ports:
+      - 8050:7050
+    volumes:
+        - ./../../artifactsKafka/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orggermany.dltrouting.com/:/etc/hyperledger/crypto/orderer
+
+  ordereritaly.dltrouting.com:
+    container_name: ordereritaly.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    image: hyperledger/fabric-orderer
+    ports:
+      - 9050:7050
+    volumes:
+        - ./../../artifactsKafka/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orgitaly.dltrouting.com/:/etc/hyperledger/crypto/orderer
+
+  orderernetherlands.dltrouting.com:
+    container_name: orderernetherlands.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    image: hyperledger/fabric-orderer
+    ports:
+      - 10050:7050
+    volumes:
+        - ./../../artifactsKafka/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orgnetherlands.dltrouting.com/:/etc/hyperledger/crypto/orderer

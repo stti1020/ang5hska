@@ -1,0 +1,143 @@
+# Services
+version: '2'
+
+networks:
+  dltroutingnetwork:
+
+services:
+
+  # Orderer
+  ordereraustria.dltrouting.com:
+    extends:
+      file: docker-compose-orderer.yaml
+      service: ordereraustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 1 - CA
+  ca.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: ca.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 1 - Peer 0
+  peer0.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: peer0.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: couchdb.peer0.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: cli.peer0.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+  # Organisation 2 - CA
+  ca.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: ca.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 2 - Peer 0
+  peer0.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: peer0.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: couchdb.peer0.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: cli.peer0.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+  # Organisation 3 - CA
+  ca.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: ca.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 3 - Peer 0
+  peer0.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: peer0.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: couchdb.peer0.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: cli.peer0.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+  # Organisation 4 - CA
+  ca.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: ca.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 4 - Peer 0
+  peer0.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: peer0.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: couchdb.peer0.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: cli.peer0.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+
+
+  

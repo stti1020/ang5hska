@@ -1,0 +1,105 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <ol class="breadcrumb">
+      <li><a routerLink="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Neuer Eintrag</li>
+    </ol>
+  </section>
+  <section class="content" style="margin-top: 10px;">
+    <div class="invoice">
+      <div *ngIf="!checkmode" class="message-block">
+        <span>Neuer Eintrag</span>
+      </div>
+       <div *ngIf="checkmode && !finishmode" class="message-block">
+        <span>Neuer Eintrag prüfen</span>
+      </div>
+      <div *ngIf="finishmode" style="background-color: #AEEA00;" class="message-block">
+        <span>Eintrag war erfolgreich</span>
+      </div>
+      <form class="form-horizontal">
+        <div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Instituts-BIC</label>
+            <div class="col-sm-3">
+              <input type="text" [(ngModel)]="bankBic" class="form-control editField" name="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Name</label>
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="bankName" class="form-control editField" name="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Instrument</label>
+            <div class="col-sm-3">
+              <div class="btn-group dropdown-style">
+                <button type="button" class="btn btn-default editField">{{selectedBankOperation.name}}</button>
+                <button type="button" class="btn btn-default dropdown-toggle editField" data-toggle="dropdown" aria-expanded="false">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a *ngFor="let operation of bankOperations" (click)="changeBankOperation(operation)">{{operation.name}}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Service</label>
+            <div class="col-sm-3">
+              <div class="btn-group dropdown-style">
+                <button type="button" class="btn btn-default editField">{{selectedService.name}}</button>
+                <button type="button" class="btn btn-default dropdown-toggle editField" data-toggle="dropdown" aria-expanded="false">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a *ngFor="let service of services" (click)="changeService(service)">{{service.name}}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Ggf. BIC der Verrechnungsstelle</label>
+            <div class="col-sm-3">
+              <input type="text" [(ngModel)]="routingEntry.counterPartyBic.value" class="form-control editField" name="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Eintrag gültig ab</label>
+            <div class="col-sm-3">
+              <input id="datefrom" class="form-control editField" readonly placeholder="DD.MM.YYYY">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Eintrag gültig bis</label>
+            <div class="col-sm-3">
+              <input id="dateto" class="form-control editField" readonly placeholder="DD.MM.YYYY">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">BIC des direkt verbundenen Clearinghauses</label>
+            <div class="col-sm-3">
+              <input type="text" [(ngModel)]="routingEntry.cooperationBic.value" class="form-control editField" name="name">
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="box-footer">
+        <div class="col-sm-12" *ngIf="!checkmode">
+          <button type="submit" class="btn btn-primary col-sm-3" (click)="checkEntry()">Weiter</button>
+          <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-6" (click)="clearChanges()">Änderungen verwerfen</button>
+        </div>
+        <div class="col-sm-12" *ngIf="checkmode && !finishmode">
+          <button type="submit" class="btn btn-primary col-sm-3" (click)="saveEntry()">Eintrag speichern</button>
+          <button type="submit" class="btn btn-primary col-sm-2 col-sm-offset-2" (click)="returnToEdit()">Zurück</button>
+          <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-2" (click)="clearChanges()">Änderungen verwerfen</button>
+        </div>
+        <div class="col-sm-12" *ngIf="finishmode">
+          <button type="submit" routerLink="/home" class="btn btn-primary col-sm-3 col-sm-offset-9">Zur Startseite</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

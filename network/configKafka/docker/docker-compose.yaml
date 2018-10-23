@@ -1,0 +1,264 @@
+# Services
+version: '2'
+
+networks:
+  dltroutingnetwork:
+
+services:
+
+  # Kafka
+  kafka0:
+    extends:
+      file: docker-compose-kafka.yaml
+      service: kafka0
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    networks:
+      - dltroutingnetwork
+
+  kafka1:
+    extends:
+      file: docker-compose-kafka.yaml
+      service: kafka1
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    networks:
+      - dltroutingnetwork
+
+  kafka2:
+    extends:
+      file: docker-compose-kafka.yaml
+      service: kafka2
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    networks:
+      - dltroutingnetwork
+
+  kafka3:
+    extends:
+      file: docker-compose-kafka.yaml
+      service: kafka3
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+    networks:
+      - dltroutingnetwork
+
+  # Zookeeper
+  zookeeper0:
+    extends:
+      file: docker-compose-kafka.yaml
+      service: zookeeper0
+    networks:
+      - dltroutingnetwork
+
+  zookeeper1:
+    extends:
+      file: docker-compose-kafka.yaml
+      service: zookeeper1
+    networks:
+      - dltroutingnetwork
+
+  zookeeper2:
+    extends:
+      file: docker-compose-kafka.yaml
+      service: zookeeper2
+    networks:
+      - dltroutingnetwork
+
+
+  # Orderer
+  ordereraustria.dltrouting.com:
+    extends:
+      file: docker-compose-orderer.yaml
+      service: ordereraustria.dltrouting.com
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+    networks:
+      - dltroutingnetwork
+
+  orderergermany.dltrouting.com:
+    extends:
+      file: docker-compose-orderer.yaml
+      service: orderergermany.dltrouting.com
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+    networks:
+      - dltroutingnetwork
+
+  ordereritaly.dltrouting.com:
+    extends:
+      file: docker-compose-orderer.yaml
+      service: ordereritaly.dltrouting.com
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+    networks:
+      - dltroutingnetwork
+
+  orderernetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orderer.yaml
+      service: orderernetherlands.dltrouting.com
+    depends_on:
+      - zookeeper0
+      - zookeeper1
+      - zookeeper2
+      - kafka0
+      - kafka1
+      - kafka2
+      - kafka3
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 1 - CA
+  ca.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: ca.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 1 - Peer 0
+  peer0.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: peer0.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: couchdb.peer0.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orgaustria.dltrouting.com:
+    extends:
+      file: docker-compose-orgaustria.yaml
+      service: cli.peer0.orgaustria.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+  # Organisation 2 - CA
+  ca.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: ca.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 2 - Peer 0
+  peer0.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: peer0.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: couchdb.peer0.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orggermany.dltrouting.com:
+    extends:
+      file: docker-compose-orggermany.yaml
+      service: cli.peer0.orggermany.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+  # Organisation 3 - CA
+  ca.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: ca.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 3 - Peer 0
+  peer0.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: peer0.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: couchdb.peer0.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orgitaly.dltrouting.com:
+    extends:
+      file: docker-compose-orgitaly.yaml
+      service: cli.peer0.orgitaly.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+  # Organisation 4 - CA
+  ca.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: ca.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  # Organisation 4 - Peer 0
+  peer0.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: peer0.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  couchdb.peer0.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: couchdb.peer0.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+  cli.peer0.orgnetherlands.dltrouting.com:
+    extends:
+      file: docker-compose-orgnetherlands.yaml
+      service: cli.peer0.orgnetherlands.dltrouting.com
+    networks:
+      - dltroutingnetwork
+
+
+
+
+  

@@ -1,0 +1,67 @@
+# Organisation 2
+version: '2'
+
+services:
+
+  # CA
+  ca.orgnetherlands.dltrouting.com:
+    container_name: ca.orgnetherlands.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: ca-base
+    environment:
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.orgnetherlands.dltrouting.com-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c2615557ec890195d4affb476040fd65dac1042ddd0f8f8f100271fae76e11e4_sk
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.orgnetherlands.dltrouting.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c2615557ec890195d4affb476040fd65dac1042ddd0f8f8f100271fae76e11e4_sk
+    ports:
+      - 10054:7054
+    volumes:
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orgnetherlands.dltrouting.com/ca/:/etc/hyperledger/fabric-ca-server-config
+
+  # Peer 0
+  peer0.orgnetherlands.dltrouting.com:
+    container_name: peer0.orgnetherlands.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.orgnetherlands.dltrouting.com
+      - CORE_PEER_LOCALMSPID=OrgNetherlandsMSP
+      - CORE_PEER_ADDRESS=peer0.orgnetherlands.dltrouting.com:7051
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb.peer0.orgnetherlands.dltrouting.com:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    ports:
+      - 10051:7051
+      - 10053:7053
+    volumes:
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orgnetherlands.dltrouting.com/peers/peer0.orgnetherlands.dltrouting.com/:/etc/hyperledger/crypto/peer
+
+  couchdb.peer0.orgnetherlands.dltrouting.com:
+    image: hyperledger/fabric-couchdb
+    container_name: couchdb.peer0.orgnetherlands.dltrouting.com
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 10984:5984
+
+  cli.peer0.orgnetherlands.dltrouting.com:
+    container_name: cli.peer0.orgnetherlands.dltrouting.com
+    extends:
+      file: docker-base.yaml
+      service: cli-base
+    environment:
+      - CORE_PEER_ID=cli.peer0.orgnetherlands.dltrouting.com
+      - CORE_PEER_ADDRESS=peer0.orgnetherlands.dltrouting.com:7051
+      - CORE_PEER_LOCALMSPID=OrgNetherlandsMSP
+      - ORDERER_ADDRESS=host.orgnetherlands.dltrouting.com:10050
+    volumes:
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orgnetherlands.dltrouting.com/peers/peer0.orgnetherlands.dltrouting.com/:/etc/hyperledger/crypto/peer
+      - ./../../artifactsKafka/crypto-config/peerOrganizations/orgnetherlands.dltrouting.com/users/Admin@orgnetherlands.dltrouting.com/msp/:/etc/hyperledger/crypto/admin/msp
+      - ./../../artifactsKafka/crypto-config/ordererOrganizations/dltrouting.com/orderers/host.orgnetherlands.dltrouting.com/msp/tlscacerts:/etc/hyperledger/crypto/orderer/msp/tlscacerts
+
+
+

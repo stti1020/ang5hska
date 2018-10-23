@@ -1,0 +1,15 @@
+.message-block {
+	background-color: grey; 
+	height: 80px; 
+	margin: -20px -20px 20px -20px;
+	line-height: 80px; 
+	text-align: center
+}
+
+.message-block span {
+	display: inline-block; 
+	vertical-align: middle; 
+	line-height: normal; 
+	font-size: 30px; 
+	color: white;
+}

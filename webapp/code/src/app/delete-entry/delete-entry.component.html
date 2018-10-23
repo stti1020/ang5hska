@@ -1,0 +1,183 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <ol class="breadcrumb">
+      <li><a routerLink="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Eintrag löschen</li>
+    </ol>
+  </section>
+  <section class="content" style="margin-top: 10px;">
+    <div class="invoice">
+      <button type="button" id="clean-up" class="btn btn-primary" (click)="startCleanUp()">Clean-Up starten</button>
+    </div>
+    <!--<div class="invoice">
+      <div *ngIf="searchmode" class="message-block">
+        <span>Eintrag löschen: vorhandenen Eintrag suchen</span>
+      </div>
+      <div *ngIf="choosemode" class="message-block">
+        <span>Eintrag löschen: Routing-Eintrag auswählen</span>
+      </div>
+      <div *ngIf="checkmode" style="background-color: orange;" class="message-block">
+        <span>Eintrag löschen: Löschen bestätigen</span>
+      </div>
+      <div *ngIf="finishmode" style="background-color: #AEEA00;" class="message-block">
+        <span>Eintrag / Einträge erfolgreich gelöscht</span>
+      </div>
+      <div *ngIf="searchmode">
+        <form class="form-horizontal">
+          <div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Instituts-BIC</label>
+              <div class="col-sm-3">
+                <input type="text" [(ngModel)]="search.bic" class="form-control" name="searchBic">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" style="margin-top: 30px;"><strong>Optional</strong></label>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Instrument</label>
+              <div class="col-sm-4">
+                <div class="btn-group dropdown-style">
+                  <button type="button" class="btn btn-default">{{search.bankOperation}}</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a *ngFor="let operation of search.bankOperations" (click)="changeSearchBankOperation(operation)">{{operation.name}}</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Service</label>
+              <div class="col-sm-4">
+                <div class="btn-group dropdown-style">
+                  <button type="button" class="btn btn-default">{{search.service}}</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a *ngFor="let service of search.services" (click)="changeSearchService(service)">{{service.name}}</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="!searchmode">
+        <form class="form-horizontal">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" style="text-align: left;">Instituts-BIC</label>
+              <div class="col-sm-3">
+                <input type="text" [(ngModel)]="search.bic" class="form-control" disabled name="searchBic">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="choosemode">
+        <table datatable [dtOptions]="dtOptions" class="table table-responsive table-striped table-bordered borderless">
+          <thead style="background-color: #367fa9; color: white;">
+            <tr>
+              <th class="borderless column-size"></th>
+              <th class="bordered">Name</th>
+              <th class="bordered">Instrument</th>
+              <th class="bordered">Service</th>
+              <th class="bordered">Verechnungs-BIC</th>
+              <th class="bordered">Gültig ab</th>
+              <th class="bordered">Gültig bis</th>
+              <th class="bordered">BIC des Clearinghauses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of searchResult">
+              <td class="borderless column-size" scope="col">
+                <input type="checkbox" value="{{i}}" class="checkbox" name="checkbox">
+              </td>
+              <td>{{searchResultName}}</td>
+              <td>{{entry.bankOperation}}</td>
+              <td>{{entry.service}}</td>
+              <td>{{entry.cooperationBic.value}}</td>
+              <td>{{entry.validFrom}}</td>
+              <td>{{entry.validTo}}</td>
+              <td>{{entry.counterPartyBic.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="checkmode">
+        <table class="table table-responsive table-striped table-bordered borderless">
+          <thead style="background-color: #367fa9; color: white;">
+            <tr>
+              <th class="bordered">Name</th>
+              <th class="bordered">Instrument</th>
+              <th class="bordered">Service</th>
+              <th class="bordered">Verechnungs-BIC</th>
+              <th class="bordered">Gültig ab</th>
+              <th class="bordered">Gültig bis</th>
+              <th class="bordered">BIC des Clearinghauses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of selectedRoutingEntries; let i = index" style="background-color: orange;">
+              <td>{{searchResultName}}</td>
+              <td>{{entry.bankOperation}}</td>
+              <td>{{entry.service}}</td>
+              <td>{{entry.cooperationBic.value}}</td>
+              <td>{{entry.validFrom}}</td>
+              <td>{{entry.validTo}}</td>
+              <td>{{entry.counterPartyBic.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="finishmode">
+        <table class="table table-responsive table-striped table-bordered borderless">
+          <thead style="background-color: #367fa9; color: white;">
+            <tr>
+              <th class="bordered">Name</th>
+              <th class="bordered">Instrument</th>
+              <th class="bordered">Service</th>
+              <th class="bordered">Verechnungs-BIC</th>
+              <th class="bordered">Gültig ab</th>
+              <th class="bordered">Gültig bis</th>
+              <th class="bordered">BIC des Clearinghauses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of selectedRoutingEntries; let i = index" style="background-color: lightgray;">
+              <td>{{searchResultName}}</td>
+              <td>{{entry.bankOperation}}</td>
+              <td>{{entry.service}}</td>
+              <td>{{entry.cooperationBic.value}}</td>
+              <td>{{entry.validFrom}}</td>
+              <td>{{entry.validTo}}</td>
+              <td>{{entry.counterPartyBic.value}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="box-footer">
+        <div class="col-sm-12" *ngIf="searchmode">
+          <button type="submit" class="btn btn-primary col-sm-3" (click)="searchInstitut()">Institut suchen</button>
+          <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-6">Änderungen verwerfen</button>
+        </div>
+        <div class="col-sm-12" *ngIf="choosemode">
+          <button type="submit" class="btn btn-primary col-sm-3" (click)="chooseEntry()">Weiter</button>
+          <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-6" (click)="returnToSearchInstitut()">Zurück</button>
+        </div>
+        <div class="col-sm-12" *ngIf="checkmode">
+          <button type="submit" class="btn btn-primary col-sm-3" (click)="checkEntry()">Weiter</button>
+          <button type="submit" class="btn btn-primary col-sm-3 col-sm-offset-6" (click)="returnToChoseEntry()">Zurück</button>
+        </div>
+        <div class="col-sm-12" *ngIf="finishmode">
+          <button type="submit" routerLink="/home" class="btn btn-primary col-sm-3 col-sm-offset-9">Zur Startseite</button>
+        </div>
+      </div>
+    </div>-->
+  </section>
+</div>
