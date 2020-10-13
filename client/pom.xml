@@ -18,7 +18,7 @@
 		<lombok.version>1.16.20</lombok.version>
         <jackson-datatype-jsr310.version>2.9.4</jackson-datatype-jsr310.version>
         <commons-text.version>1.2</commons-text.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <spring-test.version>4.3.14.RELEASE</spring-test.version>
         <spring-boot-starter-test.version>1.5.10.RELEASE</spring-boot-starter-test.version>
 		<mockito-core.version>1.10.19</mockito-core.version>
