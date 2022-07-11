@@ -12,7 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hyperledger-fabric.version>1.0.1</hyperledger-fabric.version>
-		<spring-boot.version>1.5.10.RELEASE</spring-boot.version>
+		<spring-boot.version>2.2.11.RELEASE</spring-boot.version>
 		<logback.version>1.2.3</logback.version>
 		<jackson-datatype-jsr310>2.8.10</jackson-datatype-jsr310>
 		<lombok.version>1.16.20</lombok.version>
